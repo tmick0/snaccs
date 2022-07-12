@@ -5,13 +5,13 @@ import (
 	"log"
 	"os"
 
-	model "github.com/tmick0/snaccs/model"
-	yaml "gopkg.in/yaml.v2"
+	"github.com/tmick0/snaccs/generator"
+	"github.com/tmick0/snaccs/model"
+	"gopkg.in/yaml.v2"
 )
 
 func main() {
-	log.Println("hello world")
-	var nets model.Configuration
+	var cfg model.Configuration
 
 	if len(os.Args) < 2 {
 		log.Printf("usage: %s <config.yml>\n", os.Args[0])
@@ -24,13 +24,22 @@ func main() {
 		log.Printf("failed to read config: %z\n", err)
 	}
 
-	err = yaml.Unmarshal(bytes, &nets)
+	err = yaml.Unmarshal(bytes, &cfg)
 
 	if err != nil {
 		log.Printf("failed to deserialize yaml: %s\n", err)
 		os.Exit(1)
 	}
 
-	log.Println(nets)
+	log.Println(cfg)
+
+	res, err := generator.TraefikConfigGenerator{}.Generate(cfg)
+
+	if err != nil {
+		log.Printf("failed to create traefik config: %s\n", err)
+		os.Exit(1)
+	}
+
+	log.Println(string(res))
 
 }

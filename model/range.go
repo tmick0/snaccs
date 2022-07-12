@@ -2,7 +2,7 @@ package model
 
 type (
 	Range struct {
-		start Addr `yaml:"start"`
-		end   Addr `yaml:"end"`
+		Start Addr `yaml:"start"`
+		End   Addr `yaml:"end"`
 	}
 )

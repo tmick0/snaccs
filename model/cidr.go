@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"net"
 )
 
@@ -18,4 +19,8 @@ func (cidr *Cidr) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	cidr.Address.ParseIP(ip)
 	cidr.Size, _ = net.Mask.Size()
 	return err
+}
+
+func (cidr Cidr) String() string {
+	return fmt.Sprintf("%s/%d", cidr.Address.Ip.String(), cidr.Size)
 }

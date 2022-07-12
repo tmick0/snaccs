@@ -2,6 +2,9 @@ package model
 
 type (
 	Configuration struct {
-		Networks []Network `yaml:"networks"`
+		Snaccs   SnaccsConfig `yaml:"snaccs"`
+		Networks []Network    `yaml:"networks"`
+		Hosts    []Host       `yaml:"hosts"`
+		Services []Service    `yaml:"services"`
 	}
 )
